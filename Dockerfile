@@ -25,7 +25,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY ./frontend/package.json ./package.json
 COPY ./frontend/package-lock.json ./package-lock.json
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 
 # From: https://docs.docker.com/engine/reference/builder/#using-arg-variables
@@ -52,7 +52,7 @@ ARG BUILT_FROM_PUSH
 ENV REACT_APP_BUILT_FROM_PUSH ${BUILT_FROM_PUSH}
 
 COPY ./frontend ./
-RUN npm run build
+RUN node --max-old-space-size=4096 $(which npm) run build
 # All the built frontend files for the SPA are now in '/app/build/'
 
 

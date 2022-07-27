@@ -3,10 +3,11 @@ package kafka
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/cloudhut/common/rest"
 	"github.com/twmb/franz-go/pkg/kerr"
 	"github.com/twmb/franz-go/pkg/kmsg"
-	"net/http"
 )
 
 // GetMetadata returns some generic information about the brokers in the given cluster
@@ -27,7 +28,7 @@ func (s *Service) GetMetadata(ctx context.Context, topics []string) (*kmsg.Metad
 	req := kmsg.NewMetadataRequest()
 	req.Topics = metadataRequestTopics
 
-	return req.RequestWith(ctx, s.KafkaClient)
+	return req.RequestWith(context.Background(), s.KafkaClient)
 }
 
 func (s *Service) GetSingleMetadata(ctx context.Context, topic string) (kmsg.MetadataResponseTopic, *rest.Error) {

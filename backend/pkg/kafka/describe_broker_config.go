@@ -2,8 +2,9 @@ package kafka
 
 import (
 	"context"
-	"github.com/twmb/franz-go/pkg/kmsg"
 	"strconv"
+
+	"github.com/twmb/franz-go/pkg/kmsg"
 )
 
 // DescribeBrokerConfig fetches config entries which apply at the Broker Scope (e.g. offset.retention.minutes).
@@ -21,5 +22,5 @@ func (s *Service) DescribeBrokerConfig(ctx context.Context, brokerID int32, conf
 	req.IncludeSynonyms = true
 	req.IncludeDocumentation = true
 
-	return req.RequestWith(ctx, s.KafkaClient)
+	return req.RequestWith(context.Background(), s.KafkaClient)
 }
